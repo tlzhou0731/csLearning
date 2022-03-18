@@ -82,6 +82,67 @@ class T_11{
         return max;
     }
 }
+class T_21{
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null) return list2;
+        if(list2==null) return list1;
+        ListNode head = new ListNode(0), cur = head, p1 = list1, p2 = list2;
+        while (p1 != null && p2 != null){
+            if(p1.val < p2.val){
+                cur.next = p1;
+                cur = cur.next;
+                p1 = p1.next;
+            }else {
+                cur.next = p2;
+                cur = cur.next;
+                p2 = p2.next;
+            }
+        }
+        while (p1 != null){
+            cur.next = p1;
+            cur = cur.next;
+            p1 = p1.next;
+        }
+        while (p2 != null){
+            cur.next = p2;
+            cur = cur.next;
+            p2 = p2.next;
+        }
+        return head.next;
+    }
+}
+class T_23{
+//    public ListNode mergeKLists(ListNode[] lists) {
+//        if(lists==null) return null;
+//        int len = lists.length;
+//        if(len==1)
+//            if(lists[0]==null) return null;
+//        T_21 t_21 = new T_21();
+//        for (int i = 1; 1 < len; i++) {
+//            if(lists[i]!=null)
+//                lists[0] = t_21.mergeTwoLists(lists[0], lists[i]);
+//        }
+//        return lists[0];
+//    }
+        public ListNode mergeKLists(ListNode[] lists) {
+        if(lists==null||lists.length==0) return null;
+        ListNode cur = null, res=new ListNode();
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for(int i=0; i<lists.length; i++){
+            cur = lists[i];
+            while (cur!=null){
+                queue.add(cur.val);
+                cur = cur.next;
+            }
+        }
+        cur = res;
+        while (!queue.isEmpty()){
+            cur.next = new ListNode(queue.poll());
+            cur = cur.next;
+        }
+        return res.next;
+    }
+}
 class T_32{
     public int longestValidParentheses(String s) {
         int len = s.length(), max=Integer.MIN_VALUE;
@@ -715,6 +776,24 @@ class T_145{
         }
     }
 }
+
+/**
+ * T_146
+ */
+//class LRUCache {
+//    int[] val;
+//    public LRUCache(int capacity) {
+//
+//    }
+//
+//    public int get(int key) {
+//
+//    }
+//
+//    public void put(int key, int value) {
+//
+//    }
+//}
 class T_152{
     public int maxProduct(int[] nums) {
         int res = Integer.MIN_VALUE;
@@ -798,6 +877,22 @@ class T_200{
             expand(grid,i+1,j,view);
             expand(grid,i,j+1,view);
         }
+    }
+}
+class T_206{
+    public ListNode reverseList(ListNode head) {
+        Stack<Integer> stack = new Stack<>();
+        ListNode view = head;
+        while (view!=null){
+            stack.push(view.val);
+            view = view.next;
+        }
+        view = head;
+        while (!stack.isEmpty()){
+            view.val = stack.pop();
+            view = view.next;
+        }
+        return head;
     }
 }
 class T_230{
